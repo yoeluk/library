@@ -1,4 +1,4 @@
-package example.micronaut.model;
+package example.micronaut.domain.model;
 
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;

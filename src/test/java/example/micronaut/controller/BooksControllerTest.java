@@ -1,7 +1,8 @@
 package example.micronaut.controller;
 
 
-import example.micronaut.model.BookInfo;
+import example.micronaut.domain.model.BookAvailability;
+import example.micronaut.domain.model.BookInfo;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -45,7 +46,7 @@ public class BooksControllerTest {
     @Test
     void addBookMethodTest() {
         // given
-        BookInfo bookInfo = new BookInfo("example", example.micronaut.model.BookAvailability.fromValue("available"));
+        BookInfo bookInfo = new BookInfo("example", BookAvailability.fromValue("available"));
 
         // when
         controller.addBook(bookInfo);
@@ -63,7 +64,7 @@ public class BooksControllerTest {
     @Test
     void addBookClientApiTest() throws IOException {
         // given
-        BookInfo body = new BookInfo("example", example.micronaut.model.BookAvailability.fromValue("available"));
+        BookInfo body = new BookInfo("example", BookAvailability.fromValue("available"));
         String uri = UriTemplate.of("/add").expand(new HashMap<>());
         MutableHttpRequest<?> request = HttpRequest.POST(uri, body).accept("application/json");
 
