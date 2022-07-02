@@ -12,7 +12,9 @@ gradlew.bat
 settings.gradle
 src/main/java/example/micronaut/Application.java
 src/main/java/example/micronaut/controller/BooksController.java
-src/main/java/example/micronaut/model/BookAvailability.java
-src/main/java/example/micronaut/model/BookInfo.java
+src/main/java/example/micronaut/domain/model/BookAvailability.java
+src/main/java/example/micronaut/domain/model/BookInfo.java
 src/main/resources/application.yml
 src/main/resources/logback.xml
+src/test/java/example/micronaut/domain/model/BookAvailabilityTest.java
+src/test/java/example/micronaut/domain/model/BookInfoTest.java

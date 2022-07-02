@@ -2,9 +2,9 @@
 
 This is an example app generated using the openapi generator. You can find step-by-step guide [here](https://guides.micronaut.io/latest/micronaut-openapi-generator-server-gradle-java.html).
 
-# TODO
+## TODO
 
-* refactor to use Onion Architecture
+* ~~refactor to use Onion Architecture~~
 * refactor to use multiple storage layers (ie Postgres as well as MySQL)
 * improve build flow with Jib
 * add k8s deployment (helm chart)

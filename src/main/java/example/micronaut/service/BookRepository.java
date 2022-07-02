@@ -1,7 +1,8 @@
-package example.micronaut;
+package example.micronaut.service;
 
 
-import example.micronaut.model.BookAvailability;
+import example.micronaut.domain.entity.BookEntity;
+import example.micronaut.domain.model.BookAvailability;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;

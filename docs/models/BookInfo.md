@@ -4,7 +4,7 @@
 
 Object containg all the info about a book
 
-The class is defined in **[BookInfo.java](../../src/main/java/example/micronaut/model/BookInfo.java)**
+The class is defined in **[BookInfo.java](../../src/main/java/example/micronaut/domain/model/BookInfo.java)**
 
 ## Properties
 

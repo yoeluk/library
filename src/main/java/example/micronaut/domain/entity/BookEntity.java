@@ -1,7 +1,7 @@
-package example.micronaut;
+package example.micronaut.domain.entity;
 
 
-import example.micronaut.model.BookAvailability;
+import example.micronaut.domain.model.BookAvailability;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.GeneratedValue;

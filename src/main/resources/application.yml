@@ -16,16 +16,3 @@ jackson:
     readEnumsUsingToString: true
     failOnUnknownProperties: false
     failOnInvalidSubtype: false
-
-datasources:
-  default:
-    url: ${JDBC_URL:`jdbc:mysql://192.168.2.15:3306/db`}
-    username: ${JDBC_USER:micronautApp}
-    password: ${JDBC_PASSWORD:}
-    dialect: MYSQL
-    driverClassName: ${JDBC_DRIVER:com.mysql.cj.jdbc.Driver}
-
-flyway:
-  datasources:
-    default:
-      enabled: true

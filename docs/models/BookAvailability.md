@@ -4,7 +4,7 @@
 
 ## Enum
 
-The class is defined in **[BookAvailability.java](../../src/main/java/example/micronaut/model/BookAvailability.java)**
+The class is defined in **[BookAvailability.java](../../src/main/java/example/micronaut/domain/model/BookAvailability.java)**
 
 
 * `AVAILABLE` (value: `"available"`)

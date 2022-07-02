@@ -1,6 +1,5 @@
 package example.micronaut;
 
-
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
