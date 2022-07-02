@@ -1,34 +1,23 @@
 package example.micronaut.controller;
 
+
 import example.micronaut.model.BookInfo;
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.http.client.HttpClient;
-import io.micronaut.http.client.annotation.Client;
-import io.micronaut.runtime.server.EmbeddedServer;
-import io.micronaut.http.HttpStatus;
-import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.MediaType;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.uri.UriTemplate;
-import io.micronaut.http.cookie.Cookie;
-import io.micronaut.http.client.multipart.MultipartBody;
-import io.micronaut.core.type.Argument;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Assertions;
+import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import reactor.core.publisher.Mono;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.HashSet;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * API tests for BooksController
@@ -76,11 +65,12 @@ public class BooksControllerTest {
         // given
         BookInfo body = new BookInfo("example", example.micronaut.model.BookAvailability.fromValue("available"));
         String uri = UriTemplate.of("/add").expand(new HashMap<>());
-        MutableHttpRequest<?> request = HttpRequest.POST(uri, body)
-            .accept("application/json");
+        MutableHttpRequest<?> request = HttpRequest.POST(uri, body).accept("application/json");
 
         // when
-        HttpResponse<?> response = client.toBlocking().exchange(request); // To retrieve body you must specify required type (e.g. Map.class) as second argument
+        HttpResponse<?> response = client.toBlocking()
+                .exchange(
+                        request); // To retrieve body you must specify required type (e.g. Map.class) as second argument
 
         // then
         Assertions.assertEquals(HttpStatus.OK, response.status());
@@ -116,11 +106,10 @@ public class BooksControllerTest {
     void searchClientApiTest() throws IOException {
         // given
         String uri = UriTemplate.of("/search").expand(new HashMap<>());
-        MutableHttpRequest<?> request = HttpRequest.GET(uri)
-            .accept("applicaton/json");
+        MutableHttpRequest<?> request = HttpRequest.GET(uri).accept("applicaton/json");
         request.getParameters()
-            .add("book-name", "example") // The query parameter format should be
-            .add("author-name", "example"); // The query parameter format should be
+                .add("book-name", "example") // The query parameter format should be
+                .add("author-name", "example"); // The query parameter format should be
 
         // when
         HttpResponse<?> response = client.toBlocking().exchange(request, Argument.of(List.class, BookInfo.class));
@@ -128,5 +117,4 @@ public class BooksControllerTest {
         // then
         Assertions.assertEquals(HttpStatus.OK, response.status());
     }
-
 }

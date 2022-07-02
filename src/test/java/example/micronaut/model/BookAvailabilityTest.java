@@ -1,9 +1,8 @@
 package example.micronaut.model;
 
+
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-
 
 /**
  * Model tests for BookAvailability
@@ -17,5 +16,4 @@ public class BookAvailabilityTest {
     public void testBookAvailability() {
         // TODO: test BookAvailability
     }
-
 }

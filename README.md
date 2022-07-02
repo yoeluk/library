@@ -31,7 +31,3 @@ Description on how to create Apis is given inside individual api guides:
 ## Author
 
 Yoel Garcia Diaz
-
-
-
-

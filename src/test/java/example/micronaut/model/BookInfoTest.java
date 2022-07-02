@@ -1,10 +1,8 @@
 package example.micronaut.model;
 
-import example.micronaut.model.BookAvailability;
+
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-
 
 /**
  * Model tests for BookInfo
@@ -52,5 +50,4 @@ public class BookInfoTest {
     public void ISBNTest() {
         // TODO: test ISBN
     }
-
 }
