@@ -6,8 +6,9 @@ buildscript {
 }
 
 plugins {
-	id("com.github.johnrengelman.shadow") version "7.1.1"
-	id("io.micronaut.application") version '3.4.1'
+	id 'com.github.johnrengelman.shadow' version '7.1.1'
+	id "io.micronaut.application" version "3.4.1"
+	id "io.micronaut.aot" version "3.4.1"
 	id "com.diffplug.spotless" version "6.2.2"
 	id "idea"
 }
@@ -26,11 +27,24 @@ java {
 }
 
 micronaut {
-	runtime("netty")
-	testRuntime("junit5")
+	runtime "netty"
+	testRuntime "junit5"
 	processing {
 		incremental(true)
 		annotations("example.micronaut.*")
+	}
+	aot {
+		// optional, override the Micronaut AOT version
+		version = "1.0.1"
+
+		// optimizations configuration
+		optimizeServiceLoading = true
+		convertYamlToJava = true
+		precomputeOperations = true
+		cacheEnvironment = true
+		netty {
+			enabled = true
+		}
 	}
 }
 
