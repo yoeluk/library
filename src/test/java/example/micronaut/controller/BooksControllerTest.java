@@ -46,7 +46,7 @@ public class BooksControllerTest {
     @Test
     void addBookMethodTest() {
         // given
-        BookInfo bookInfo = new BookInfo("example", BookAvailability.fromValue("available"));
+        BookInfo bookInfo = new BookInfo("example", BookAvailability.fromValue("available"), null, null);
 
         // when
         controller.addBook(bookInfo);
@@ -64,7 +64,7 @@ public class BooksControllerTest {
     @Test
     void addBookClientApiTest() throws IOException {
         // given
-        BookInfo body = new BookInfo("example", BookAvailability.fromValue("available"));
+        BookInfo body = new BookInfo("example", BookAvailability.fromValue("available"), null, null);
         String uri = UriTemplate.of("/add").expand(new HashMap<>());
         MutableHttpRequest<?> request = HttpRequest.POST(uri, body).accept("application/json");
 

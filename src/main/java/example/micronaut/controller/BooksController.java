@@ -27,23 +27,16 @@ import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Generated(
-        value = "org.openapitools.codegen.languages.JavaMicronautServerCodegen",
-        date = "2022-07-02T07:34:39.921641-04:00[America/Toronto]")
 @Controller
-@Tag(name = "Books", description = "The Books API")
 public class BooksController {
     private final BookRepository bookRepository;
 
@@ -62,16 +55,13 @@ public class BooksController {
             responses = {
                 @ApiResponse(responseCode = "200", description = "Success"),
                 @ApiResponse(responseCode = "400", description = "Bad Request")
-            },
-            parameters = {@Parameter(name = "bookInfo", required = true)})
+            })
     @Post(uri = "/add")
-    @Produces(value = {})
-    @Consumes(value = {"application/json"})
     @Secured({SecurityRule.IS_ANONYMOUS})
     @ExecuteOn(TaskExecutors.IO)
     @Status(OK)
     public void addBook(@Body @NotNull @Valid BookInfo bookInfo) {
-        bookRepository.save(bookInfo.getName(), bookInfo.getAvailability(), bookInfo.getAuthor(), bookInfo.getISBN());
+        bookRepository.save(bookInfo.name(), bookInfo.availability(), bookInfo.author(), bookInfo.ISBN());
     }
 
     /**
@@ -89,27 +79,21 @@ public class BooksController {
                         responseCode = "200",
                         description = "Success",
                         content = {
-                            @Content(mediaType = "applicaton/json", schema = @Schema(implementation = BookInfo.class))
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BookInfo.class))
                         }),
                 @ApiResponse(responseCode = "400", description = "Bad Request")
-            },
-            parameters = {@Parameter(name = "bookName"), @Parameter(name = "authorName")})
+            })
     @Get(uri = "/search")
-    @Produces(value = {"applicaton/json"})
     @Secured({SecurityRule.IS_ANONYMOUS})
     @ExecuteOn(TaskExecutors.IO)
     public List<BookInfo> search(
-            @QueryValue(value = "book-name") @Nullable @Size(min = 3) String bookName,
-            @QueryValue(value = "author-name") @Nullable String authorName) {
-        // TODO implement search();
+            @QueryValue(value = "bookName") @Nullable @Size(min = 3) String bookName,
+            @QueryValue(value = "authorName") @Nullable String authorName) {
         return searchEntities(bookName, authorName).stream().map(this::map).collect(Collectors.toList());
     }
 
     private BookInfo map(BookEntity entity) {
-        BookInfo book = new BookInfo(entity.getName(), entity.getAvailability());
-        book.setISBN(entity.getIsbn());
-        book.setAuthor(entity.getAuthor());
-        return book;
+        return new BookInfo(entity.getName(), entity.getAvailability(), entity.getAuthor(), entity.getIsbn());
     }
 
     @NonNull
