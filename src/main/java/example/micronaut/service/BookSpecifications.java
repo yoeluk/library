@@ -3,7 +3,7 @@ package example.micronaut.service;
 
 import example.micronaut.domain.entity.BookEntity;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.data.repository.jpa.criteria.*;
+import io.micronaut.data.repository.jpa.criteria.PredicateSpecification;
 
 public class BookSpecifications {
     public static PredicateSpecification<BookEntity> nameLike(@NonNull String name) {
