@@ -4,6 +4,7 @@ package example.micronaut.service;
 import example.micronaut.domain.entity.*;
 import example.micronaut.domain.model.*;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.GenericRepository;
@@ -26,6 +27,6 @@ public interface BookRepository extends GenericRepository<BookEntity, Long>, Jpa
     BookEntity save(
             @NonNull @NotBlank String name,
             @NonNull @NotNull BookAvailability availability,
-            @NonNull @NotBlank String author,
-            @NonNull @NotBlank String isbn);
+            @Nullable String author,
+            @Nullable String isbn);
 }

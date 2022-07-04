@@ -13,11 +13,13 @@
 package example.micronaut.domain.model;
 
 
+import io.micronaut.core.annotation.Introspected;
 import javax.annotation.Nullable;
 
 /**
  * Object containg all the info about a book
  */
+@Introspected
 public record BookInfo(String name, BookAvailability availability, @Nullable String author, @Nullable String ISBN) {
 
     @Override
