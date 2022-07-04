@@ -65,6 +65,10 @@ dependencies {
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	runtimeOnly("ch.qos.logback:logback-classic")
 
+	// management endpoints
+	annotationProcessor("io.micronaut:micronaut-management")
+	implementation("io.micronaut:micronaut-management")
+
 	// openapi
 	annotationProcessor("io.micronaut.openapi:micronaut-openapi:4.3.0")
 	implementation("io.swagger.core.v3:swagger-annotations")
@@ -79,18 +83,6 @@ dependencies {
 	// flyway migration
 	implementation("io.micronaut.flyway:micronaut-flyway")
 	runtimeOnly("org.flywaydb:flyway-mysql")
-}
-
-tasks.withType(JavaExec) {
-	classpath += configurations.developmentOnly
-	jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
-	if (gradle.startParameter.continuous) {
-		systemProperties(
-				'micronaut.io.watch.restart':'true',
-				'micronaut.io.watch.enabled':'true',
-				"micronaut.io.watch.paths":"src/main"
-		)
-	}
 }
 
 task runLocal(type: JavaExec) {
