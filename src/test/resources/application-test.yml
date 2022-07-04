@@ -1,0 +1,32 @@
+micronaut:
+  application:
+    name: library-api
+  server:
+    port: 8081
+    host: 0.0.0.0
+    cors:
+      enabled: true
+  security:
+    # authentication: bearer | cookie | session | idtoken
+
+jackson:
+  serialization:
+    writeEnumsUsingToString: true
+    writeDatesAsTimestamps: false
+  deserialization:
+    readEnumsUsingToString: true
+    failOnUnknownProperties: false
+    failOnInvalidSubtype: false
+
+datasources:
+  default:
+    url: 'jdbc:tc:mysql:8.0://192.168.2.15/db'
+    username: 'root'
+    password: 'test'
+    dialect: MYSQL
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+
+flyway:
+  datasources:
+    default:
+      enabled: true

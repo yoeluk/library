@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 /**
  * API tests for BooksController
  */
-@MicronautTest
+@MicronautTest(environments = "test")
 public class BooksControllerTest {
 
     @Inject
@@ -46,13 +46,15 @@ public class BooksControllerTest {
     @Test
     void addBookMethodTest() {
         // given
-        BookInfo bookInfo = new BookInfo("example", BookAvailability.fromValue("available"), null, null);
+        BookInfo bookInfo = new BookInfo(
+                "Twenty Thousand Leagues Under the Seas", BookAvailability.fromValue("available"), null, null);
 
         // when
         controller.addBook(bookInfo);
 
         // then
-        Assertions.assertTrue(true);
+        List<BookInfo> result = controller.search("Twenty", null);
+        Assertions.assertTrue(result.size() > 0);
     }
 
     /**
@@ -64,14 +66,14 @@ public class BooksControllerTest {
     @Test
     void addBookClientApiTest() throws IOException {
         // given
+        var host = server.getHost();
+        var port = server.getPort();
         BookInfo body = new BookInfo("example", BookAvailability.fromValue("available"), null, null);
-        String uri = UriTemplate.of("/add").expand(new HashMap<>());
-        MutableHttpRequest<?> request = HttpRequest.POST(uri, body).accept("application/json");
+        String uri = UriTemplate.of("http://" + host + ":" + port + "/add").expand(new HashMap<>());
+        var request = HttpRequest.POST(uri, body).accept("application/json");
 
         // when
-        HttpResponse<?> response = client.toBlocking()
-                .exchange(
-                        request); // To retrieve body you must specify required type (e.g. Map.class) as second argument
+        var response = client.toBlocking().exchange(request);
 
         // then
         Assertions.assertEquals(HttpStatus.OK, response.status());
@@ -87,7 +89,7 @@ public class BooksControllerTest {
     @Test
     void searchMethodTest() {
         // given
-        String bookName = "example";
+        String bookName = "Guide";
         String authorName = "example";
 
         // when
@@ -106,11 +108,13 @@ public class BooksControllerTest {
     @Test
     void searchClientApiTest() throws IOException {
         // given
-        String uri = UriTemplate.of("/search").expand(new HashMap<>());
-        MutableHttpRequest<?> request = HttpRequest.GET(uri).accept("applicaton/json");
+      var host = server.getHost();
+      var port = server.getPort();
+        String uri = UriTemplate.of("http://" + host + ":" + port + "/search").expand(new HashMap<>());
+        MutableHttpRequest<?> request = HttpRequest.GET(uri).accept("application/json");
         request.getParameters()
-                .add("book-name", "example") // The query parameter format should be
-                .add("author-name", "example"); // The query parameter format should be
+                .add("book-name", "Wonderland") // The query parameter format should be
+                .add("author-name", "Caroll"); // The query parameter format should be
 
         // when
         HttpResponse<?> response = client.toBlocking().exchange(request, Argument.of(List.class, BookInfo.class));

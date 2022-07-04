@@ -83,6 +83,13 @@ dependencies {
 	// flyway migration
 	implementation("io.micronaut.flyway:micronaut-flyway")
 	runtimeOnly("org.flywaydb:flyway-mysql")
+
+	// test
+	testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
+	testImplementation("org.testcontainers:testcontainers:1.17.3")
+	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
+	testImplementation("org.testcontainers:mysql:1.17.3")
+
 }
 
 task runLocal(type: JavaExec) {
