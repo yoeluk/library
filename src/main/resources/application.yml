@@ -17,6 +17,27 @@ micronaut:
         httpMethod: GET
         access:
           - isAnonymous()
+      - pattern: /beans
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /refresh
+        httpMethod: POST
+        access:
+          - isAnonymous()
+      - pattern: /routes
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /threaddump
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /info
+        httpMethod: HEAD
+        access:
+          - isAnonymous()
+
   router:
     static-resources:
       swagger:
@@ -47,3 +68,12 @@ flyway:
   datasources:
     default:
       enabled: true
+
+endpoints:
+  health:
+    details-visible: ANONYMOUS
+    jdbc:
+      enabled: true
+  info:
+    enabled: true
+    sensitive: false
