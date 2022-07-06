@@ -1,6 +1,6 @@
 # Library Example
 
-This is an example app generated using the openapi generator. You can find step-by-step guide [here](https://guides.micronaut.io/latest/micronaut-openapi-generator-server-gradle-java.html).
+This is an example app generated using the openapi generator. You can find step-by-step guide [here](https://guides.micronaut.io/latest/micronaut-openapi-generator-server-gradle-java.html) and refactored significantly after the initial project generation.
 
 ## TODO
 
