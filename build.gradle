@@ -53,6 +53,23 @@ micronaut {
 	}
 }
 
+sourceSets {
+	itest {
+		compileClasspath += sourceSets.main.output + test.output
+		runtimeClasspath += sourceSets.main.output + test.output
+		java {
+			srcDir file('src/itest/java')
+		}
+	}
+}
+
+// dependencies declaration
+configurations {
+	itestImplementation.extendsFrom(testImplementation)
+	itestAnnotationProcessor.extendsFrom(testAnnotationProcessor)
+	itestRuntimeOnly.extendsFrom(testRuntimeOnly)
+}
+
 dependencies {
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
@@ -67,11 +84,10 @@ dependencies {
 
 	// management endpoints
 	annotationProcessor("io.micronaut:micronaut-management")
-//	implementation("io.micronaut:micronaut-management")
 
 	// openapi
 	annotationProcessor("io.micronaut.openapi:micronaut-openapi")
-    implementation("io.micronaut.openapi:micronaut-openapi")
+	implementation("io.micronaut.openapi:micronaut-openapi")
 	implementation("io.swagger.core.v3:swagger-annotations")
 
 	// persistence
@@ -86,11 +102,13 @@ dependencies {
 	runtimeOnly("org.flywaydb:flyway-mysql")
 
 	// test
-	testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
-	testImplementation("org.testcontainers:testcontainers:1.17.3")
-	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
-	testImplementation("org.testcontainers:mysql:1.17.3")
+	testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+	testImplementation('org.junit.jupiter:junit-jupiter')
 
+	// itest
+	itestImplementation("org.testcontainers:testcontainers")
+	itestImplementation("org.testcontainers:junit-jupiter")
+	itestImplementation("org.testcontainers:mysql")
 }
 
 def openapiPropsFile = "$buildDir/openapi.properties"
@@ -118,6 +136,13 @@ tasks.withType( JavaCompile ) {
 	options.compilerArgs.addAll([
 			"-Amicronaut.openapi.config.file=$openapiPropsFile"
 	])
+}
+
+task itest(type: Test) {
+	description = "Run integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets.itest.output.classesDirs
+	classpath = sourceSets.itest.runtimeClasspath
 }
 
 tasks.withType( JavaExec ) {

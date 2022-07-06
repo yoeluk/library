@@ -1,6 +1,7 @@
-package example.micronaut.controller;
+package example.library.controller;
 
 
+import example.micronaut.controller.BooksController;
 import example.micronaut.domain.model.BookAvailability;
 import example.micronaut.domain.model.BookInfo;
 import io.micronaut.core.type.Argument;
@@ -23,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * API tests for BooksController
  */
-@MicronautTest(environments = "test")
+@MicronautTest(environments = "itest")
 public class BooksControllerTest {
 
     @Inject
@@ -108,8 +109,8 @@ public class BooksControllerTest {
     @Test
     void searchClientApiTest() throws IOException {
         // given
-      var host = server.getHost();
-      var port = server.getPort();
+        var host = server.getHost();
+        var port = server.getPort();
         String uri = UriTemplate.of("http://" + host + ":" + port + "/search").expand(new HashMap<>());
         MutableHttpRequest<?> request = HttpRequest.GET(uri).accept("application/json");
         request.getParameters()
