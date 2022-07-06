@@ -102,7 +102,6 @@ task writeOpenApiProps( type: WriteProperties ) {
 
     file( "openapi.properties" ).withReader { baseProperties.load( it ) }
 
-
     for( prop in baseProperties ) {
         property prop.key.toString(), prop.value
     }
