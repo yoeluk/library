@@ -67,10 +67,11 @@ dependencies {
 
 	// management endpoints
 	annotationProcessor("io.micronaut:micronaut-management")
-	implementation("io.micronaut:micronaut-management")
+//	implementation("io.micronaut:micronaut-management")
 
 	// openapi
-	annotationProcessor("io.micronaut.openapi:micronaut-openapi:4.3.0")
+	annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    implementation("io.micronaut.openapi:micronaut-openapi")
 	implementation("io.swagger.core.v3:swagger-annotations")
 
 	// persistence
@@ -95,41 +96,40 @@ dependencies {
 def openapiPropsFile = "$buildDir/openapi.properties"
 
 task writeOpenApiProps( type: WriteProperties ) {
-    outputFile = openapiPropsFile
-    def (_, majorVersion, minorVersion) = (project.getVersion() =~ /(\d+)\.(\d+)(.*)/)[0]
-    def apiVersion = "$majorVersion.$minorVersion"
-    def baseProperties = new Properties()
+	outputFile = openapiPropsFile
+	def (_, majorVersion, minorVersion) = (project.getVersion() =~ /(\d+)\.(\d+)(.*)/)[0]
+	def apiVersion = "$majorVersion.$minorVersion"
+	def baseProperties = new Properties()
 
-    file( "openapi.properties" ).withReader { baseProperties.load( it ) }
+	file( "openapi.properties" ).withReader { baseProperties.load( it ) }
 
-    for( prop in baseProperties ) {
-        property prop.key.toString(), prop.value
-    }
+	for( prop in baseProperties ) {
+		property prop.key.toString(), prop.value
+	}
 
-    property "micronaut.openapi.expand.api.version", apiVersion
-    property "micronaut.openapi.expand.api.title", rootProject.name
+	property "micronaut.openapi.expand.api.version", apiVersion
+	property "micronaut.openapi.expand.api.title", rootProject.name
 }
 
 tasks.withType( JavaCompile ) {
-    dependsOn processResources
-    dependsOn writeOpenApiProps
+	dependsOn writeOpenApiProps
 
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll([
-            "-Amicronaut.openapi.config.file=$openapiPropsFile"
-    ])
+	options.encoding = "UTF-8"
+	options.compilerArgs.addAll([
+			"-Amicronaut.openapi.config.file=$openapiPropsFile"
+	])
 }
 
 tasks.withType( JavaExec ) {
-    classpath += configurations.developmentOnly
-    jvmArgs( '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote' )
-    if( gradle.startParameter.continuous ) {
-        systemProperties(
-                'micronaut.io.watch.restart': 'true',
-                'micronaut.io.watch.enabled': 'true',
-                "micronaut.io.watch.paths": "src/main"
-        )
-    }
+	classpath += configurations.developmentOnly
+	jvmArgs( '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote' )
+	if( gradle.startParameter.continuous ) {
+		systemProperties(
+				'micronaut.io.watch.restart': 'true',
+				'micronaut.io.watch.enabled': 'true',
+				"micronaut.io.watch.paths": "src/main"
+		)
+	}
 }
 
 task runLocal(type: JavaExec) {
