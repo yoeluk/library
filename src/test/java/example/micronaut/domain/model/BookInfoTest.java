@@ -1,13 +1,8 @@
 package example.micronaut.domain.model;
 
 
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 
-/**
- * Model tests for BookInfo
- */
-@MicronautTest
 public class BookInfoTest {
     private final BookInfo model = null;
 

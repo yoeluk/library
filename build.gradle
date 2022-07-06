@@ -55,8 +55,8 @@ micronaut {
 
 sourceSets {
 	itest {
-		compileClasspath += sourceSets.main.output + test.output
-		runtimeClasspath += sourceSets.main.output + test.output
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
 		java {
 			srcDir file('src/itest/java')
 		}
@@ -157,9 +157,11 @@ tasks.withType( JavaExec ) {
 	}
 }
 
+check.dependsOn itest
+
 task runLocal(type: JavaExec) {
 	classpath = sourceSets.main.runtimeClasspath
-	main = application.mainClassName
+	mainClass.set("example.micronaut.Application")
 	jvmArgs '-Dmicronaut.environments=local'
 }
 

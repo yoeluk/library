@@ -20,7 +20,7 @@ jackson:
 
 datasources:
   default:
-    url: 'jdbc:tc:mysql:8.0://192.168.2.15/db'
+    url: 'jdbc:tc:mysql:8.0://192.168.2.15:3306/db'
     username: 'root'
     password: 'test'
     dialect: MYSQL
