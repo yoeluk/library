@@ -5,6 +5,7 @@ import example.micronaut.domain.entity.BookEntity;
 import example.micronaut.domain.model.BookAvailability;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.GenericRepository;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Repository("default")
 @JdbcRepository(dialect = Dialect.MYSQL)
 public interface BookRepository extends GenericRepository<BookEntity, Long>, JpaSpecificationExecutor<BookEntity> {
 
